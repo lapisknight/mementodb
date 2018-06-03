@@ -14,6 +14,7 @@ var discogs = new Discogs("Consumer key" ,"Consumer secret" , "release" );
 var r = discogs.search(query);
 result( r , function(id) { return discogs.extra(id);});
 */
+
 function Discogs (apiKey ) {
     this.apiKey = apiKey;
 }
@@ -25,7 +26,7 @@ Issue a search query to Discogs database.
 */
 Discogs.prototype.search = function(query) {
   var result = http().get("https://api.nal.usda.gov/ndb/search/?q=" + encodeURIComponent(query) + "&sort=n&max=25&offset=0&api_key=" + this.apiKey);
-  var json = JSON.parse(result.body);
+  var json = JSON.parse(result);
   return json.results;  
 }
 
@@ -35,7 +36,7 @@ Issue a search query to Discogs database.
 */
 Discogs.prototype.barcode = function(code) {
   var result = http().get("https://api.nal.usda.gov/ndb/reports/?ndbno=" + encodeURIComponent(code) + "&type=b&format=json&api_key=" + this.apiKey);
-  var json = JSON.parse(result.body);
+  var json = JSON.parse(result);
   return json.results;  
 }
 
@@ -44,6 +45,6 @@ Discogs.prototype.barcode = function(code) {
 */
 Discogs.prototype.extra = function(id) {
     var resultJson = http().get("https://api.nal.usda.gov/ndb/reports/?ndbno=" + id + "&type=b&api_key=" + this.apiKey);
-    var result = JSON.parse(resultJson.body); 
+    var result = JSON.parse(resultJson); 
     return result;
 }
