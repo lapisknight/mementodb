@@ -24,7 +24,7 @@ Issue a search query to Discogs database.
 @param {string} query - Search query.
 */
 Discogs.prototype.search = function(query) {
-  var result = http().get("https://api.nal.usda.gov/ndb/search/?format=json&q=" + encodeURIComponent(query) + "&sort=n&max=25&offset=0&api_key=" + this.apiKey);
+  var result = http().get("https://api.nal.usda.gov/ndb/search/?q=" + encodeURIComponent(query) + "&sort=n&max=25&offset=0&api_key=" + this.apiKey);
   var json = JSON.parse(result.body);
   return json.results;  
 }
@@ -43,7 +43,7 @@ Discogs.prototype.barcode = function(code) {
 @param {string} id - The resource identifier.
 */
 Discogs.prototype.extra = function(id) {
-    var resultJson = http().get("https://api.nal.usda.gov/ndb/reports/?ndbno=" + id + "&type=b&format=json&api_key=" + this.apiKey);
+    var resultJson = http().get("https://api.nal.usda.gov/ndb/reports/?ndbno=" + id + "&type=b&api_key=" + this.apiKey);
     var result = JSON.parse(resultJson.body); 
     return result;
 }
